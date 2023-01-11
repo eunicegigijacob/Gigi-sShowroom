@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const { dotenvConfig } = require('./config');
+dotenvConfig;
 
-export const connectDb = () => {
+const connectDb = () => {
   mongoose.set('strictQuery', false);
   mongoose
     .connect(process.env.MONGO_URL, {
@@ -10,3 +12,5 @@ export const connectDb = () => {
     })
     .then(() => console.log('DB connection successful !'));
 };
+
+module.exports = { connectDb };

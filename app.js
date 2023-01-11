@@ -8,4 +8,4 @@ app.get('/', (req, res) => {
   res.render('admin');
 });
 
-export default app;
+module.exports = { app };
