@@ -2,13 +2,14 @@ const express = require('express');
 
 const app = express();
 
+// register view engine
+app.set('view engine', 'ejs');
+
 //middleware
 app.use(express.json());
 
-app.set('view engine', 'ejs');
-
 app.get('/', (req, res) => {
-  res.render('admin');
+  res.render('pages/index');
 });
 
 module.exports = { app };
