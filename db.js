@@ -4,6 +4,7 @@ dotenvConfig;
 
 const connectDb = () => {
   mongoose.set('strictQuery', false);
+
   mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
   var conn = mongoose.connection;
   conn.on('connected', function () {
@@ -12,8 +13,6 @@ const connectDb = () => {
   conn.on('disconnected', function () {
     console.log('database is disconnected successfully');
   });
-  conn.on('error', console.error.bind(console, 'connection error:'));
-  module.exports = conn;
 };
 
 module.exports = { connectDb };
