@@ -1,15 +1,18 @@
 const express = require('express');
+const { routemanager } = require('./routes/route');
 
 const app = express();
 
 // register view engine
 app.set('view engine', 'ejs');
 
-//middleware
+app.use(express.static('public'));
+
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.render('pages/index');
-});
+app.use(routemanager);
 
+app.use((req, res) => {
+  res.render('pages/404page');
+});
 module.exports = { app };
