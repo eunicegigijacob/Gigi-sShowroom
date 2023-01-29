@@ -113,8 +113,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="addToCarList(), revertphoto()" class="btn btn-primary">Add to
-                        List</button>
+                    <button type="button" class="btn btn-primary" id="add-car-btn">Add to List</button>
                 </div>
             </div>
         </div>
@@ -180,6 +179,13 @@
 
     </style>
     <!--Banner Area-->
+
+    <script>
+        const addCarBtn = document.getElementById('add-car-btn')
+        addCarBtn.onclick = () => {
+            console.log('btn-clicked')
+        }
+    </script>
 
 </body>
 
