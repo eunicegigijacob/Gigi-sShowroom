@@ -4,24 +4,11 @@ dotenvConfig;
 
 const connectDb = () => {
   mongoose.set('strictQuery', false);
-
-  mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
-  var conn = mongoose.connection;
-  conn.on('connected', function () {
-    console.log('database is connected successfully');
-  });
-  conn.on('disconnected', function () {
-    console.log('database is disconnected successfully');
-  });
+  mongoose
+    .connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+    })
+    .then(() => console.log('Database connected successfully'));
 };
 
 module.exports = { connectDb };
-
-// mongoose.set('strictQuery', false);
-// mongoose
-//   .connect(process.env.MONGO_URL, {
-//     useNewUrlParser: true,
-//     retryWrites: true,
-//     w: 'majority',
-//   })
-//   .then(() => console.log('DB connection successful !'));
