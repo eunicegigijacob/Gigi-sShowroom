@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
       validate: {
         validator: (v) => {
           const regex =
@@ -17,6 +18,10 @@ const UserSchema = new Schema(
         },
         message: 'must use a valid email address ',
       },
+    },
+    password: {
+      type: String,
+      required: true,
     },
     role: {
       type: String,
