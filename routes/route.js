@@ -19,4 +19,6 @@ routemanager.get('/signup', (req, res) => {
   res.render('pages/signup');
 });
 
+routemanager.post('/signup', usercontrols.signUp);
+
 module.exports = { routemanager };
