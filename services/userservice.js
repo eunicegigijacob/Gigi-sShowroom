@@ -4,8 +4,8 @@ const userServices = {
   createUser: async (newUser) => {
     return await User.create(newUser);
   },
-  getUser: async (username) => {
-    return await User.find(username);
+  findUser: async (email) => {
+    return await User.findOne({ email });
   },
 };
 
