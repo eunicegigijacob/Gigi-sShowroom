@@ -3,16 +3,19 @@ const signupForm = document.getElementById('signup-form');
 const userName = document.getElementById('username');
 const userEmail = document.getElementById('email');
 const userPassword = document.getElementById('password');
-
+const url = window.location.href;
+const url1 = url.split('/signup');
+url1.pop();
+const url3 = url1.toString();
 loginBtn.onclick = async () => {
-  window.location.href = 'http://localhost:3000/login';
+  window.location.href = `${url3}/login`;
 };
 
 signupForm.onsubmit = async (e) => {
   e.preventDefault();
   console.log(userName.value, userEmail.value, userPassword.value);
 
-  const response = await fetch(window.location.href, {
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'Application/json',
@@ -23,5 +26,9 @@ signupForm.onsubmit = async (e) => {
       password: userPassword.value,
     }),
   });
-  console.log(await response.json());
+  const resolved = await response.json();
+  console.log(resolved);
+  if (resolved) {
+    window.location.href = `${url3}/login`;
+  }
 };
