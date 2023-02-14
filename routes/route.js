@@ -21,4 +21,6 @@ routemanager.get('/signup', (req, res) => {
 
 routemanager.post('/signup', usercontrols.signUp);
 
+routemanager.post('/login', usercontrols.login);
+
 module.exports = { routemanager };
