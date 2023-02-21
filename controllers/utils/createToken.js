@@ -5,11 +5,7 @@ dotenv.config();
 
 const tokenUtil = {
   loginToken: (data) => {
-    return jwt.sign(
-      { data },
-      process.env.SECRETE_KEY
-      //    { expiresIn: '1h' }
-    );
+    return jwt.sign({ data }, process.env.SECRETE_KEY, { expiresIn: '3d' });
   },
 };
 
