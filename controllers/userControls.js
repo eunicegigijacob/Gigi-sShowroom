@@ -8,8 +8,8 @@ const usercontrols = {
     if (userName && email && password) {
       const existingUser = await userServices.findUser(email);
       if (existingUser) {
-        return response.status(200).json({
-          status: 'Successful',
+        return response.status(400).json({
+          status: 'Error!',
           data: 'Email exists for another user',
         });
       }
@@ -18,16 +18,18 @@ const usercontrols = {
         email,
         password,
       });
-      const data = {
-        name: newUser.userName,
-        id: newUser._id,
-      };
+      const token = tokenUtil.loginToken(newUser._id);
+      response.cookie('jwt', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 3,
+      });
+
       return response.status(200).json({
         status: 'Successful',
-        data: data,
+        data: 'Account created',
       });
     } else {
-      return response.status(200).json({
+      return response.status(400).json({
         status: 'Error',
         data: 'Request body is empty',
       });
@@ -36,24 +38,24 @@ const usercontrols = {
 
   login: async (req, res) => {
     const { email, password } = req.body;
-    const user = await userServices.findUser(email);
-    if (user) {
-      user.comparePassword(password, function (err, isMatch) {
-        if (err) throw err;
-        console.log('.....', isMatch);
-        if (isMatch) {
-          console.log('istrue o!');
-          const token = tokenUtil.loginToken(user._id);
-          return res.status(200).json({
-            status: 'Success',
-            data: token,
-          });
-        } else {
-          console.log('wrong password');
-        }
+
+    const user = await User.login(email, password);
+    if (user === 'Incorrect password' || user === 'Incorrect email') {
+      return res.status(400).json({
+        status: 'Error',
+        data: user,
+      });
+    } else {
+      const token = tokenUtil.loginToken(user._id);
+      res.cookie('jwt', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 3,
+      });
+      return res.status(200).json({
+        status: 'Success',
+        data: user,
       });
     }
-    // console.log('****', await userServices.ConfirmUser(email, password));
   },
 };
 
