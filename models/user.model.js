@@ -38,15 +38,18 @@ UserSchema.pre('save', async function (next) {
   return next();
 });
 
-UserSchema.methods.comparePassword = function (password, callback) {
-  bcrypt.compare(password, this.password, function (error, isMatch) {
-    if (error) {
-      return callback(error);
-    } else {
-      callback(null, isMatch);
+UserSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
     }
-  });
+    return 'Incorrect password';
+  }
+  return 'Incorrect email';
 };
+
 const User = model('User', UserSchema);
 
 module.exports = { User };
