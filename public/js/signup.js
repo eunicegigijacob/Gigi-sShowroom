@@ -28,7 +28,7 @@ signupForm.onsubmit = async (e) => {
   });
   const resolved = await response.json();
   console.log(resolved);
-  if (resolved) {
-    window.location.href = `${url3}/login`;
+  if (resolved.status === 'Successful') {
+    location.assign('/');
   }
 };
